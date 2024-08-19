@@ -1,5 +1,6 @@
 import express from "express";
 import "dotenv/config";
+import fs from "fs";
 const app = express();
 
 const port = process.env.PORT;
@@ -11,7 +12,11 @@ app.use(express.json());
 //  GET Request ==> app.get
 
 app.get("/", (req, res) => {
-  res.status(200).json({ msg: "Get Request" });
+  fs.readFile("db.json", "utf8", (err, data) => {
+    if (err) res.status(400).json({ err });
+    if (data) res.status(200).json({ data: JSON.parse(data) });
+  });
+  //   res.status(200).json({ msg: "Get Request" });
 });
 
 //  POST Request ==> app.post
