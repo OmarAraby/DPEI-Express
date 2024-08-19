@@ -5,6 +5,9 @@ const app = express();
 const port = process.env.PORT;
 app.listen(port, () => console.log(`Hello from express server ${port}`));
 
+// Middleware ==> check
+app.use(express.json());
+
 //  GET Request ==> app.get
 
 app.get("/", (req, res) => {
@@ -12,3 +15,7 @@ app.get("/", (req, res) => {
 });
 
 //  POST Request ==> app.post
+app.post("/", (req, res) => {
+  console.log(req.body);
+  res.status(201).json({ msg: "POST Request" });
+});
