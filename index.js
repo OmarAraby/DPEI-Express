@@ -20,8 +20,14 @@ app.post("/", (req, res) => {
   res.status(201).json({ msg: "POST Request" });
 });
 
-//  PUt Request ==> app.post
+//  PUt Request ==> app.put
 app.put("/:id", (req, res) => {
+  console.log(req.params);
+  res.status(201).json({ id: req.params.id });
+});
+
+//  Delete Request ==> app.delete
+app.delete("/:id", (req, res) => {
   console.log(req.params);
   res.status(201).json({ id: req.params.id });
 });
