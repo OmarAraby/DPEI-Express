@@ -49,7 +49,7 @@ app.put("/:id", (req, res) => {
     if (data) {
       const parsedData = JSON.parse(data);
       const users = parsedData["users"];
-      const userId = users.findIndex((e) => (e.id = id));
+      const userId = users.findIndex((e) => e.id == id);
       users[userId].name = name;
 
       //  update file after edit
