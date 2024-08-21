@@ -51,20 +51,36 @@ app.put("/:id", (req, res) => {
       const users = parsedData["users"];
       const userId = users.findIndex((e) => (e.id = id));
       users[userId].name = name;
-      fs.writeFile(
-        "db.json",
-        JSON.stringify({ users, last_id: parsedData["last_id"] }),
-        (err) => {
-          if (err) res.status(400).json({ err: "somthing wrong" });
-          res.status(200).json({ msg: "User has been Updated" });
-        }
-      );
+
+      //  update file after edit
+      fs.writeFile("db.json", JSON.stringify({ users }), (err) => {
+        if (err) res.status(400).json({ err: "somthing wrong" });
+        res.status(200).json({ msg: "User has been Updated" });
+      });
     }
   });
 });
 
 //  Delete Request ==> app.delete
 app.delete("/:id", (req, res) => {
-  console.log(req.params);
-  res.status(201).json({ id: req.params.id });
+  // console.log(req.params);
+  const id = req.params.id;
+  fs.readFile("db.json", "utf8", (err, data) => {
+    if (err) res.status(400).json({ err: "something wrong" });
+    if (data) {
+      const parsedData = JSON.parse(data);
+      let users = parsedData["users"];
+      const leftOvers = users.filter((e) => e.id != id);
+
+      fs.writeFile(
+        "db.json",
+        JSON.stringify({ users: leftOvers, last_id: parsedData["last_id"] }),
+        (err) => {
+          if (err) res.status(400).json({ err: "somthig wrong" });
+          res.status(200).json({ msg: "User Has been Deleted Succesfully " });
+        }
+      );
+    }
+  });
+  // res.status(201).json({ id: req.params.id });
 });
