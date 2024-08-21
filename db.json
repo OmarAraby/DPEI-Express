@@ -1,8 +1,1 @@
-{
-  "user": [
-    {
-      "id": 1,
-      "name": "Omar"
-    }
-  ]
-}
+{"users":[{"id":"1","name":"ali"},{"id":2,"name":"Ahmed"}],"last_id":2}
